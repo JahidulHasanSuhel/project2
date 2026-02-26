@@ -6,7 +6,15 @@ let currentStatus = "All";
 
 
 const total = document.getElementById("total");
-
+let total1 = document.getElementById("total1");
+let total2 = document.getElementById("total2");
+let availableJobs = document.getElementById("remainingJobs");
+let filteredAvailableJobsInterview = document.getElementById(
+  "filteredRemainingJobs",
+);
+let filteredAvailableJobsReject = document.getElementById(
+  "filteredRemainingJobsReject",
+);
 const interviewCnt = document.getElementById("interviewCnt");
 const rejectedCnt = document.getElementById("rejectedCnt");
 
@@ -17,7 +25,7 @@ const rejectedBtn = document.getElementById("rejectedBtn");
 
 
 const cardContainer = document.getElementById("cardContainer");
-total.innerText = cardContainer.children.length;
+
 
 
 const ofAll = document.getElementById("ofAll");
@@ -28,6 +36,18 @@ const filterInterviewBtn = document.getElementById("filterInterview");
 const filterRejectedBtn = document.getElementById("filterRejected");
 
 const filteredSecton = document.getElementById("filteredSecton");
+
+
+const main = document.querySelector("main");
+
+function claculateCount() {
+    total.innerText = cardContainer.children.length;
+    availableJobs.innerText = cardContainer.children.length;
+    interviewCnt.innerText = interviewList.length;
+    rejectedCnt.innerText = rejectList.length;
+}
+
+claculateCount();
 
 function toogleBtn(id){
 
@@ -75,3 +95,4 @@ function toogleBtn(id){
     }
 
 }
+
