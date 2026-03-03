@@ -80,7 +80,7 @@ main.addEventListener("click", (event) =>{
       }
 
       rejectList = rejectList.filter(
-        (item) => item.companyName == cardData.companyName,
+        (item) => item.companyName != cardData.companyName,
       );
 
       if (currentStatus == "rejectedBtn") {
@@ -88,6 +88,7 @@ main.addEventListener("click", (event) =>{
 
       }
         
+    handleNoJobCard();
     claculateCount();
 
 
@@ -121,13 +122,14 @@ main.addEventListener("click", (event) =>{
       }
 
       interviewList = interviewList.filter(
-        (item) => item.companyName == cardData.companyName,
+        (item) => item.companyName != cardData.companyName,
       );
 
-      if (currentStatus == "rejectedBtn") {
+      if (currentStatus == "interviewBtn") {
         RenderFilteredJobs(rejectList);
+        handleNoJobCard();
       }
-
+      
       claculateCount();
     }
 
@@ -161,18 +163,22 @@ function toogleBtn(id){
 
     console.log(currentStatus);
     
+    filteredSecton.classList.add("hidden");
+    cardContainer.classList.add("hidden");
 
-    // ofAll.classList.add('hidden');
+    ofAll.classList.add("hidden");
+    ofReject.classList.add("hidden");
+    ofInterview.classList.add("hidden");
 
 
     if(id == 'allBtn'){
         allBtn.classList.add('btn-primary')
-        filteredSecton.classList.add('hidden')
+
         cardContainer.classList.remove("hidden");
 
         ofAll.classList.remove("hidden");
-        ofReject.classList.add("hidden");
-        ofInterview.classList.add("hidden");
+        // ofReject.classList.add("hidden");
+        // ofInterview.classList.add("hidden");
 
     } else if (id == 'interviewBtn') {
         interviewBtn.classList.add("btn-primary");
@@ -180,11 +186,13 @@ function toogleBtn(id){
         cardContainer.classList.add('hidden');
         filteredSecton.classList.remove('hidden')
 
-        ofAll.classList.add('hidden');
-        ofReject.classList.add('hidden');
+        // ofAll.classList.add('hidden');
+        // ofReject.classList.add('hidden');
         ofInterview.classList.remove('hidden')
 
         RenderFilteredJobs(interviewList);
+
+        handleNoJobCard();
         
         
     } else if (id == 'rejectedBtn') {
@@ -192,11 +200,13 @@ function toogleBtn(id){
         cardContainer.classList.add('hidden');
         filteredSecton.classList.remove('hidden')
 
-        ofAll.classList.add("hidden");
+        // ofAll.classList.add("hidden");
         ofReject.classList.remove("hidden");
-        ofInterview.classList.add("hidden");
+        // ofInterview.classList.add("hidden");
 
         RenderFilteredJobs(rejectList);
+
+        handleNoJobCard();
     }
 
 }
@@ -232,4 +242,20 @@ function RenderFilteredJobs(cardArray) {
         filterJobs.append(div);
     }
 
+}
+
+
+function handleNoJobCard(){
+     const noJobCard = document.getElementById("noJobCard");
+
+     const emptyInterview =
+       currentStatus === "interviewBtn" && interviewList.length === 0;
+     const emptyReject =
+       currentStatus === "rejectedBtn" && rejectList.length === 0;
+
+     if (emptyInterview || emptyReject) {
+       noJobCard.classList.remove("hidden");
+     } else {
+       noJobCard.classList.add("hidden");
+     }
 }
